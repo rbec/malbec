@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Malbec.Collections.Generic;
 
 namespace Malbec.Collections
 {
@@ -79,7 +80,7 @@ namespace Malbec.Collections
       }
     }
 
-    public static IEnumerable<int> PostProcess(this IEnumerable<int> x)
+    public static IEnumerable<int> WithoutPairs(this IEnumerable<int> x)
     {
       using (var e = x.GetEnumerator())
         if (e.MoveNext())
@@ -108,7 +109,7 @@ namespace Malbec.Collections
     public static IEnumerable<int> Or(this IEnumerable<int> x, IEnumerable<int> y) => Merge(x, y, true, true);
     public static IEnumerable<int> Not(this IEnumerable<int> x, IEnumerable<int> y) => Merge(x, y, true, false);
     public static IEnumerable<int> Not(this IEnumerable<int> x) => x.Not(0.Starting());
-    public static IEnumerable<int> AndKeys(this IEnumerable<int> x, IEnumerable<int> y) => x.AndKeysInternal(y).PostProcess().ToExternal();
+    public static IEnumerable<int> AndKeys(this IEnumerable<int> x, IEnumerable<int> y) => x.AndKeysInternal(y).WithoutPairs().ToExternal();
     public static IEnumerable<int> OrKeys(this IEnumerable<int> x, IEnumerable<int> y) => x.ToInternal().OrKeysInternal(y.ToInternal()).ToExternal().Or(x); // TODO: FIX
 
     #region Internal
@@ -283,7 +284,7 @@ namespace Malbec.Collections
     }
     #endregion
 
-    public static string AsString(this IEnumerable<int> x) => string.Join(", ", x.AsStringInternal());
+    public static string AsString(this IEnumerable<int> x) => x.AsStringInternal().ToCSV();
 
     private static IEnumerable<string> AsStringInternal(this IEnumerable<int> x)
     {

@@ -36,7 +36,7 @@ namespace Malbec.Functions
     public List<TItem> this[IReadOnlyList<TXItem> x, IReadOnlyList<TYItem> y] => x.Zip(y, Func).ToList();
     public Log<Δ1, List<TItem>> React(List<TItem> value, ILog<Δ1, IReadOnlyList<TXItem>> x, ILog<Δ1, IReadOnlyList<TYItem>> y)
     {
-      return value.Mutate(x.Δ, (key, i) => Func(x.Value[key], y.Value[key])); // TODO: dispose of old values
+      return value.Mutate(x.Δ, (index, i) => Func(x.Value[index], y.Value[index])); // TODO: dispose of old values
     }
 
     public void Dispose(List<TItem> value) { }

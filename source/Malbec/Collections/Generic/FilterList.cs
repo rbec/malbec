@@ -18,7 +18,7 @@ namespace Malbec.Collections.Generic
     public IEnumerator<TItem> GetEnumerator() => Y.AsNumbers().Select(key => X[key]).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     public int Count => Y.IntervalsCount();
-    public TItem this[int key] => X[Y.Value(key)];
+    public TItem this[int index] => X[Y.Value(index)];
     public override string ToString() => this.ToCSV();
   }
 }

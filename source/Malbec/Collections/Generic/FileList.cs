@@ -31,13 +31,13 @@ namespace Malbec.Collections.Generic
     public int Count { get; }
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-    public T this[int key]
+    public T this[int index]
     {
       get
       {
-        Lists.CheckBounds(Count, key);
+        Lists.CheckBounds(Count, index);
         T value;
-        View.Read(key * RecordSize + HeaderSize, out value);
+        View.Read(index * RecordSize + HeaderSize, out value);
         return value;
       }
     }

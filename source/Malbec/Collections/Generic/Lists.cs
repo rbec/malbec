@@ -11,12 +11,12 @@ namespace Malbec.Collections.Generic
 
   public static class Lists
   {
-    public static void CheckBounds(int count, int key)
+    public static void CheckBounds(int count, int index)
     {
-      if (key < 0)
-        throw new IndexOutOfRangeException(nameof(key));
-      if (key >= count)
-        throw new IndexOutOfRangeException(nameof(key));
+      if (index < 0)
+        throw new IndexOutOfRangeException(nameof(index));
+      if (index >= count)
+        throw new IndexOutOfRangeException(nameof(index));
     }
 
     public static void CheckBounds(int listCount, int start, int count)
@@ -42,15 +42,29 @@ namespace Malbec.Collections.Generic
       return start;
     }
 
-    public static int LowerBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem> => items.Search(item, start, count, (item1, item2) => !default(TOrder)[item1, item2]);
-    public static int LowerBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem> => items.Search(item, start, count, (item1, item2) => default(TOrder)[item2, item1]);
-    public static int UpperBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem> => items.LowerBoundEx<TItem, TOrder>(item, start, count) - 1;
-    public static int UpperBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem> => items.LowerBound<TItem, TOrder>(item, start, count) - 1;
+    public static int LowerBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem>
+      => items.Search(item, start, count, (x, y) => !default(TOrder)[x, y]);
 
-    public static int LowerBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem> => items.LowerBound<TItem, TOrder>(item, 0, items.Count);
-    public static int LowerBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem> => items.LowerBoundEx<TItem, TOrder>(item, 0, items.Count);
-    public static int UpperBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem> => items.UpperBound<TItem, TOrder>(item, 0, items.Count);
-    public static int UpperBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem> => items.UpperBoundEx<TItem, TOrder>(item, 0, items.Count);
+    public static int LowerBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem>
+      => items.Search(item, start, count, (x, y) => default(TOrder)[y, x]);
+
+    public static int UpperBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem>
+      => items.LowerBoundEx<TItem, TOrder>(item, start, count) - 1;
+
+    public static int UpperBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item, int start, int count) where TOrder : struct, IOrdering<TItem>
+      => items.LowerBound<TItem, TOrder>(item, start, count) - 1;
+
+    public static int LowerBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem>
+      => items.LowerBound<TItem, TOrder>(item, 0, items.Count);
+
+    public static int LowerBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem>
+      => items.LowerBoundEx<TItem, TOrder>(item, 0, items.Count);
+
+    public static int UpperBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem>
+      => items.UpperBound<TItem, TOrder>(item, 0, items.Count);
+
+    public static int UpperBoundEx<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem>
+      => items.UpperBoundEx<TItem, TOrder>(item, 0, items.Count);
 
     public static int? TryLowerBound<TItem, TOrder>(this IReadOnlyList<TItem> items, TItem item) where TOrder : struct, IOrdering<TItem>
     {

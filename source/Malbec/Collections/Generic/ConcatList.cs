@@ -18,7 +18,7 @@ namespace Malbec.Collections.Generic
     public IEnumerator<TItem> GetEnumerator() => X.Concat(Y).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     public int Count => X.Count + Y.Count;
-    public TItem this[int key] => key < X.Count ? X[key] : Y[key - X.Count];
+    public TItem this[int index] => index < X.Count ? X[index] : Y[index - X.Count];
     public override string ToString() => this.ToCSV();
   }
 }

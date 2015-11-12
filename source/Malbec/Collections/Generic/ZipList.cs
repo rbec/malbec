@@ -11,11 +11,11 @@ namespace Malbec.Collections.Generic
     public readonly IReadOnlyList<TXItem> X;
     public readonly IReadOnlyList<TYItem> Y;
 
-    public ZipList(Func<TXItem, TYItem, TItem> function, IReadOnlyList<TXItem> x, IReadOnlyList<TYItem> y)
+    public ZipList(Func<TXItem, TYItem, TItem> f, IReadOnlyList<TXItem> x, IReadOnlyList<TYItem> y)
     {
       if (x.Count != y.Count)
         throw new Exception("Lists are not the same length");
-      Function = function;
+      Function = f;
       X = x;
       Y = y;
     }
@@ -23,7 +23,7 @@ namespace Malbec.Collections.Generic
     public IEnumerator<TItem> GetEnumerator() => X.Zip(Y, Function).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     public int Count => X.Count;
-    public TItem this[int key] => Function(X[key], Y[key]);
+    public TItem this[int index] => Function(X[index], Y[index]);
     public override string ToString() => this.ToCSV();
   }
 }

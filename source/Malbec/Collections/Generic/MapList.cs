@@ -19,12 +19,12 @@ namespace Malbec.Collections.Generic
     public IEnumerator<TItem> GetEnumerator() => X.Select(Function).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     public int Count => X.Count;
-    public TItem this[int key] => Function(X[key]);
+    public TItem this[int index] => Function(X[index]);
     public override string ToString() => this.ToCSV();
   }
 
   public sealed class MapList<TXItem, TItem> : MapList<IReadOnlyList<TXItem>, TXItem, TItem>
   {
-    public MapList(Func<TXItem, TItem> function, IReadOnlyList<TXItem> x) : base(function, x) {}
+    public MapList(Func<TXItem, TItem> f, IReadOnlyList<TXItem> x) : base(f, x) {}
   }
 }

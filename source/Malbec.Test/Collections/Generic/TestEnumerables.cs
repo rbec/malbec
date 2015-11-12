@@ -11,15 +11,15 @@ namespace Malbec.Test.Collections.Generic
     [Test]
     public static void TestExcludePairedCardinalities()
     {
-      Assert.That(Lists<int>.Empty.PostProcess(), Is.EqualTo(new int[] {}));
-      Assert.That(2.Starting().PostProcess(), Is.EqualTo(new[] {2}));
-      Assert.That(new[] {2, 3}.PostProcess(), Is.EqualTo(new[] {2, 3}));
-      Assert.That(new[] {2, 3, 3}.PostProcess(), Is.EqualTo(new[] {2}));
-      Assert.That(new[] {2, 3, 3, 3}.PostProcess(), Is.EqualTo(new[] {2, 3}));
-      Assert.That(new[] {2, 3, 3, 3, 3}.PostProcess(), Is.EqualTo(new[] {2}));
-      Assert.That(new[] {2, 3, 3, 3, 3, 3}.PostProcess(), Is.EqualTo(new[] {2, 3}));
-      Assert.That(new[] {2, 2, 3, 3, 3, 3}.PostProcess(), Is.EqualTo(new int[] {}));
-      Assert.That(new[] {2, 2, 3, 3, 3, 5}.PostProcess(), Is.EqualTo(new[] {3, 5}));
+      Assert.That(Lists<int>.Empty.WithoutPairs(), Is.EqualTo(new int[] {}));
+      Assert.That(2.Starting().WithoutPairs(), Is.EqualTo(new[] {2}));
+      Assert.That(new[] {2, 3}.WithoutPairs(), Is.EqualTo(new[] {2, 3}));
+      Assert.That(new[] {2, 3, 3}.WithoutPairs(), Is.EqualTo(new[] {2}));
+      Assert.That(new[] {2, 3, 3, 3}.WithoutPairs(), Is.EqualTo(new[] {2, 3}));
+      Assert.That(new[] {2, 3, 3, 3, 3}.WithoutPairs(), Is.EqualTo(new[] {2}));
+      Assert.That(new[] {2, 3, 3, 3, 3, 3}.WithoutPairs(), Is.EqualTo(new[] {2, 3}));
+      Assert.That(new[] {2, 2, 3, 3, 3, 3}.WithoutPairs(), Is.EqualTo(new int[] {}));
+      Assert.That(new[] {2, 2, 3, 3, 3, 5}.WithoutPairs(), Is.EqualTo(new[] {3, 5}));
     }
 
     [Test]
