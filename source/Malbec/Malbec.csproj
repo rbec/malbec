@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C847D74F-4D5E-4548-AFC4-E184CB2B7015}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Malbec</RootNamespace>
+    <AssemblyName>Malbec</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\Generic\ConcatList.cs" />
+    <Compile Include="Collections\Generic\FileList.cs" />
+    <Compile Include="Collections\Generic\FilterList.cs" />
+    <Compile Include="Collections\Generic\Lists.cs" />
+    <Compile Include="Collections\Generic\MapList.cs" />
+    <Compile Include="Collections\Generic\Orderings\DateTimeOrder.cs" />
+    <Compile Include="Collections\Generic\Orderings\IOrdering.cs" />
+    <Compile Include="Collections\Generic\Orderings\Int32Order.cs" />
+    <Compile Include="Collections\Generic\ScanList.cs" />
+    <Compile Include="Collections\Generic\Enumerables.cs" />
+    <Compile Include="Collections\Generic\SortList.cs" />
+    <Compile Include="Collections\Generic\ZipList.cs" />
+    <Compile Include="Collections\Intervals.cs" />
+    <Compile Include="Collections\Generic\Orderings\Comparer.cs" />
+    <Compile Include="Functions\ChooseFunction.cs" />
+    <Compile Include="Functions\ConcatFunction.cs" />
+    <Compile Include="Functions\CountFunction.cs" />
+    <Compile Include="Functions\FoldFunction.cs" />
+    <Compile Include="Functions\IFunction.cs" />
+    <Compile Include="Functions\FilterFunction.cs" />
+    <Compile Include="Functions\LowerBoundFunction.cs" />
+    <Compile Include="Functions\LowerBoundsFunction.cs" />
+    <Compile Include="Functions\MapFunction.cs" />
+    <Compile Include="Functions\OptionToListFunction.cs" />
+    <Compile Include="Functions\ScanFunction.cs" />
+    <Compile Include="Functions\Function.cs" />
+    <Compile Include="Functions\ZipFunction.cs" />
+    <Compile Include="Graphs\Graphing.cs" />
+    <Compile Include="Graphs\IExternalNode.cs" />
+    <Compile Include="Graphs\INode.cs" />
+    <Compile Include="Graphs\Nodes.cs" />
+    <Compile Include="Logs\ILog.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reactive\Composition.cs" />
+    <Compile Include="Reactive\Expressions\BaseExp.cs" />
+    <Compile Include="Reactive\Expressions\BaseFunctionExp.cs" />
+    <Compile Include="Reactive\Expressions\BaseVariableExp.cs" />
+    <Compile Include="Reactive\Expressions\ConstantExp.cs" />
+    <Compile Include="Reactive\Expressions\FunctionExp.cs" />
+    <Compile Include="Reactive\Expressions\IExp.cs" />
+    <Compile Include="Reactive\Expressions\ListVariableExp.cs" />
+    <Compile Include="Reactive\Expressions\SubExp.cs" />
+    <Compile Include="Reactive\Expressions\SubsExp.cs" />
+    <Compile Include="Reactive\Expressions\VariableExp.cs" />
+    <Compile Include="Reactive\Patches\IPatch.cs" />
+    <Compile Include="Reactive\Patches\Patching.cs" />
+    <Compile Include="Reactive\Subscribers\ConsoleSubscriber.cs" />
+    <Compile Include="Reactive\Subscribers\Subscriber.cs" />
+    <Compile Include="Reactive\Subscriptions\ISub.cs" />
+    <Compile Include="Logs\Log.cs" />
+    <Compile Include="Logs\Logging.cs" />
+    <Compile Include="Logs\Δ0.cs" />
+    <Compile Include="Logs\Δ1.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

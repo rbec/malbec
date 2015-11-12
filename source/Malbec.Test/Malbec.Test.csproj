@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F722B769-1AA3-4F4C-8D4A-C62FD917AEC1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Malbec.Test</RootNamespace>
+    <AssemblyName>Malbec.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Collections\TestIntervals.cs" />
+    <Compile Include="Functions\TestFoldFunction.cs" />
+    <Compile Include="Functions\TestConcatFunction.cs" />
+    <Compile Include="Functions\TestLowerBoundsFunction.cs" />
+    <Compile Include="Functions\TestMapFunction.cs" />
+    <Compile Include="Functions\TestOptionToListFunction.cs" />
+    <Compile Include="Functions\TestScanFunction.cs" />
+    <Compile Include="Functions\TestShooseFunction.cs" />
+    <Compile Include="Graphs\DAG.cs" />
+    <Compile Include="Graphs\Node.cs" />
+    <Compile Include="Graphs\Graph.cs" />
+    <Compile Include="Graphs\ImmutableNode.cs" />
+    <Compile Include="Graphs\MutableNode.cs" />
+    <Compile Include="Graphs\TestGraphs.cs" />
+    <Compile Include="LogComparer.cs" />
+    <Compile Include="Collections\Generic\TestEnumerables.cs" />
+    <Compile Include="Collections\Generic\TestLists.cs" />
+    <Compile Include="Collections\Generic\TestSortList.cs" />
+    <Compile Include="Collections\Generic\TestScanList.cs" />
+    <Compile Include="Collections\Generic\TestMapList.cs" />
+    <Compile Include="Collections\Generic\TestFilterList.cs" />
+    <Compile Include="Collections\Generic\TestConcatList.cs" />
+    <Compile Include="Functions\TestFilterFunction.cs" />
+    <Compile Include="Functions\TestLowerBoundFunction.cs" />
+    <Compile Include="Functions\TestSimpleFunction.cs" />
+    <Compile Include="MonteCarlo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reactive\Integration.cs" />
+    <Compile Include="Reactive\TestSubscriber.cs" />
+    <Compile Include="Δs\TestΔ1.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Malbec\Malbec.csproj">
+      <Project>{C847D74F-4D5E-4548-AFC4-E184CB2B7015}</Project>
+      <Name>Malbec</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
