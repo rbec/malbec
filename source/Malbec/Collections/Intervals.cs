@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Malbec.Collections.Generic;
 
 namespace Malbec.Collections
 {
@@ -283,7 +284,7 @@ namespace Malbec.Collections
     }
     #endregion
 
-    public static string AsString(this IEnumerable<int> x) => string.Join(", ", x.AsStringInternal().Take(100));
+    public static string AsString(this IEnumerable<int> x) => x.AsStringInternal().ToCSV();
 
     private static IEnumerable<string> AsStringInternal(this IEnumerable<int> x)
     {

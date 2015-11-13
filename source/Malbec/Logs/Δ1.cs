@@ -22,8 +22,15 @@ namespace Malbec.Logs
       InsInternal = ins;
     }
 
-    public static Δ1 From(IReadOnlyList<int> del, IReadOnlyList<int> ins) => del.Count == 0 && ins.Count == 0 ? Empty : new Δ1(del, ins);
-    public static Δ1 From(IEnumerable<int> del, IEnumerable<int> ins) => From(del.ToList(), ins.ToList());
+    public static Δ1 From(IReadOnlyList<int> del, IReadOnlyList<int> ins)
+    {
+      return del.Count == 0 && ins.Count == 0 ? Empty : new Δ1(del, ins);
+    }
+
+    public static Δ1 From(IEnumerable<int> del, IEnumerable<int> ins)
+    {
+      return From(del.ToList(), ins.ToList());
+    }
 
     public bool IsEmpty => Del.Count == 0 && Ins.Count == 0;
 
