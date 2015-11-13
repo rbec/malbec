@@ -79,8 +79,8 @@
     <Compile Include="Reactive\Expressions\ConstantExp.cs" />
     <Compile Include="Reactive\Expressions\FunctionExp.cs" />
     <Compile Include="Reactive\Expressions\IExp.cs" />
+    <Compile Include="Reactive\Expressions\InvokeExp.cs" />
     <Compile Include="Reactive\Expressions\ListVariableExp.cs" />
-    <Compile Include="Reactive\Expressions\SubExp.cs" />
     <Compile Include="Reactive\Expressions\SubsExp.cs" />
     <Compile Include="Reactive\Expressions\VariableExp.cs" />
     <Compile Include="Reactive\Patches\IPatch.cs" />
