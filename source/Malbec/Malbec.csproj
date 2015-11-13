@@ -81,7 +81,7 @@
     <Compile Include="Reactive\Expressions\IExp.cs" />
     <Compile Include="Reactive\Expressions\InvokeExp.cs" />
     <Compile Include="Reactive\Expressions\ListVariableExp.cs" />
-    <Compile Include="Reactive\Expressions\SubsExp.cs" />
+    <Compile Include="Reactive\Expressions\MapInvokeExp.cs" />
     <Compile Include="Reactive\Expressions\VariableExp.cs" />
     <Compile Include="Reactive\Patches\IPatch.cs" />
     <Compile Include="Reactive\Patches\Patching.cs" />
