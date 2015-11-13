@@ -9,12 +9,12 @@ using Malbec.Reactive.Patches;
 
 namespace Malbec.Reactive.Expressions
 {
-  public sealed class SubsExp<T> : BaseFunctionExp<Δ1, IReadOnlyList<T>, MapList<List<ISub<Δ0, T>>, ISub<Δ0, T>, T>>
+  public sealed class MapInvokeExp<T> : BaseFunctionExp<Δ1, IReadOnlyList<T>, MapList<List<ISub<Δ0, T>>, ISub<Δ0, T>, T>>
   {
     private readonly IExp<Δ1, IReadOnlyList<IExp<Δ0, T>>> X;
     private ISub<Δ1, IReadOnlyList<IExp<Δ0, T>>> Sub;
 
-    public SubsExp(IExp<Δ1, IReadOnlyList<IExp<Δ0, T>>> x)
+    public MapInvokeExp(IExp<Δ1, IReadOnlyList<IExp<Δ0, T>>> x)
     {
       X = x;
     }

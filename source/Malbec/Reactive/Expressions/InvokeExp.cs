@@ -6,13 +6,13 @@ using Malbec.Reactive.Patches;
 
 namespace Malbec.Reactive.Expressions
 {
-  public sealed class SubExp<T> : BaseFunctionExp<Δ0, T, T>
+  public sealed class InvokeExp<T> : BaseFunctionExp<Δ0, T, T>
   {
     private readonly IExp<Δ0, IExp<Δ0, T>> X;
     private ISub<Δ0, IExp<Δ0, T>> Sub;
     private ISub<Δ0, T> SubSub;
 
-    public SubExp(IExp<Δ0, IExp<Δ0, T>> x)
+    public InvokeExp(IExp<Δ0, IExp<Δ0, T>> x)
     {
       X = x;
     }

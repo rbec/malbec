@@ -66,10 +66,10 @@ namespace Malbec.Reactive
       => Function<Δ1, Δ1, IReadOnlyList<TItem>, IReadOnlyList<TItem>, TItem, ConcatList<TItem>>(new ConcatFunction<TItem>(), x, y);
 
     public static IExp<Δ0, T> Invoke<T>(IExp<Δ0, IExp<Δ0, T>> x)
-      => new SubExp<T>(x);
+      => new InvokeExp<T>(x);
 
     public static IExp<Δ1, IReadOnlyList<TItem>> MapInvoke<TItem>(IExp<Δ1, IReadOnlyList<IExp<Δ0, TItem>>> x)
-      => new SubsExp<TItem>(x);
+      => new MapInvokeExp<TItem>(x);
 
     public static IExp<Δ1, IReadOnlyList<TItem>> Filter<TItem>(IExp<Δ1, IReadOnlyList<TItem>> x, IExp<Δ1, IReadOnlyList<int>> y)
       => Function<Δ1, Δ1, IReadOnlyList<TItem>, IReadOnlyList<int>, TItem, FilterList<TItem>>(new FilterFunction<TItem>(), x, y);
