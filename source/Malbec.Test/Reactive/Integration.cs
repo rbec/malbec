@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Malbec.Collections.Generic.Orderings;
 using Malbec.Logs;
+using Malbec.Reactive;
 using Malbec.Reactive.Patches;
 using NUnit.Framework;
 using static System.Math;
@@ -18,8 +19,8 @@ namespace Malbec.Test.Reactive
     public static void Simple1()
     {
       var x = Variable(7);
-      var y = ℱ(n => n + 1, x);
-      var z = ℱ(n => n%2, y);
+      var y = Function(n => n + 1, x);
+      var z = Function(n => n%2, y);
       using (var test = Tests.Subscribe(nameof(y), y, nameof(z), z))
       {
         test.Assert(x.Assign(10), 11.ToLog(true), 1.ToLog(true));
@@ -46,7 +47,7 @@ namespace Malbec.Test.Reactive
       var x = Variable(7);
       var y = Variable(x);
       var z = Variable(22);
-      using (var test = Tests.Subscribe(nameof(y), ℱInvoke(y)))
+      using (var test = Tests.Subscribe(nameof(y), Invoke(y)))
       {
         test.Assert(x.Assign(10), 10.ToLog(true));
         test.Assert(y.Assign(z), 22.ToLog(true));
@@ -63,10 +64,10 @@ namespace Malbec.Test.Reactive
     {
       var a = Variable("A");
       var b = Variable("B");
-      var c = ℱ(v => $"{v}+", b);
+      var c = Function(v => $"{v}+", b);
       var x = Variable(a);
       var y = Variable(c);
-      using (var test = Tests.Subscribe(nameof(x), ℱInvoke(x), nameof(y), ℱInvoke(y)))
+      using (var test = Tests.Subscribe(nameof(x), Invoke(x), nameof(y), Invoke(y)))
       {
         test.Assert(x.Assign(c), "B+".ToLog(true), "B+");
         test.Assert(x.Assign(a), "A".ToLog(true), "B+");
@@ -78,7 +79,7 @@ namespace Malbec.Test.Reactive
     public static void Map()
     {
       var x = Variable(1, 5, 100);
-      var y = ℱMap(value => value + 1, x);
+      var y = Composition.Map(value => value + 1, x);
       using (var test = Tests.Subscribe(nameof(y), y))
       {
         test.Assert(x.Sub(1, 77), Expected(2, 78, 101).ToLog(Δ.Sub(1)));
@@ -93,7 +94,7 @@ namespace Malbec.Test.Reactive
       var x = Variable(2);
       var y = Variable(3);
       var z = Variable(w, x, y);
-      using (var test = Tests.Subscribe(nameof(z), ℱMapInvoke(z)))
+      using (var test = Tests.Subscribe(nameof(z), Composition.MapInvoke(z)))
       {
         test.Assert(z.Del(1), Expected(1, 3).ToLog(Δ.Del(1)));
         test.Assert(y.Assign(27), Expected(1, 27).ToLog(Δ.Sub(1)));
@@ -107,7 +108,7 @@ namespace Malbec.Test.Reactive
     public static void Choose()
     {
       var flag = Variable(false);
-      var option = ℱChoose(77, 78, flag);
+      var option = Composition.Choose(77, 78, flag);
       using (var test = Tests.Subscribe(nameof(option), option))
         test.Assert(flag.Assign(true), 78.ToLog(true));
     }
@@ -123,7 +124,7 @@ namespace Malbec.Test.Reactive
     public static void Option()
     {
       var value = Variable(2.0);
-      var option = ℱOption(ℱ(v => v >= 0, value), ℱ(Sqrt, value));
+      var option = Composition.Option(Function(v => v >= 0, value), Function(Sqrt, value));
       using (var test = Tests.Subscribe(nameof(option), option))
       {
         test.Assert(value.Assign(4), ((double?) 2.0).ToLog(true));
@@ -136,19 +137,19 @@ namespace Malbec.Test.Reactive
     {
       var prices = Variable(2, 4, 3, 1, 6, 5);
       var times = Variable(1, 5, 10, 10, 11, 15);
-      var high = ℱFold(
+      var high = Fold(
         Max,
-        ℱFilter(
+        Filter(
           prices,
-          ℱLowerBounds<int, Int32Order>(
+          LowerBounds<int, Int32Order>(
             times,
             Constant(5, 11))));
 
-      var low = ℱFold(
+      var low = Fold(
         Min,
-        ℱFilter(
+        Filter(
           prices,
-          ℱLowerBounds<int, Int32Order>(
+          LowerBounds<int, Int32Order>(
             times,
             Constant(5, 11))));
 
