@@ -284,7 +284,7 @@ namespace Malbec.Collections
     }
     #endregion
 
-    public static string AsString(this IEnumerable<int> x) => x.AsStringInternal().ToCSV();
+    public static string AsString(this IEnumerable<int> x) => string.Join(", ", x.AsStringInternal());
 
     private static IEnumerable<string> AsStringInternal(this IEnumerable<int> x)
     {
