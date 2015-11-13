@@ -39,3 +39,5 @@ _ReSharper*/
 
 # Ignore NuGet Packages
 /src/packages/
+source/packages/NUnit.2.6.4/lib/nunit.framework.xml
+source/packages/NUnit.2.6.4/license.txt
