@@ -131,7 +131,7 @@ namespace Malbec.Test.Collections
       for (var i = 0; i < 100; i++)
       {
         var x = MonteCarlo.Intervals(50).ToList();
-        Console.WriteLine(x.ToCSV(100));
+        Console.WriteLine(x.ToCSV());
         var y = x.AsNumbers().ToList();
         for (var j = 0; j < y.Count; j++)
           Assert.That(x.Value(j), Is.EqualTo(y[j]));
@@ -144,7 +144,7 @@ namespace Malbec.Test.Collections
       for (var i = 0; i < 100; i++)
       {
         var x = MonteCarlo.Intervals(50).ToList();
-        Console.WriteLine(x.ToCSV(100));
+        Console.WriteLine(x.ToCSV());
         var xn = x.Not(100.Ending()).ToList();
 
         foreach (var j in x.AsNumbers().ToList())
@@ -373,8 +373,8 @@ namespace Malbec.Test.Collections
         var a = xn.Intersect(yn).Order().Select(n => xn.IndexOf(n)).ToList();
         var b = xi.AndKeys(yi).AsNumbers().ToList();
 
-        Console.WriteLine(a.ToCSV(100));
-        Console.WriteLine(b.ToCSV(100));
+        Console.WriteLine(a.ToCSV());
+        Console.WriteLine(b.ToCSV());
         Console.WriteLine();
         Assert.That(a, Is.EqualTo(b));
         Assert.That(yn.Intersect(xn).Order().Select(n => yn.IndexOf(n)), Is.EqualTo(yi.AndKeys(xi).AsNumbers()));
@@ -452,6 +452,106 @@ namespace Malbec.Test.Collections
       Assert.That(new[] {1, 2, 3}.AsIntervals().Concat(5, new[] {2}.AsIntervals()).AsNumbers(), Is.EqualTo(new[] {1, 2, 3, 7}));
       Assert.That(new[] {1, 3}.AsIntervals().Concat(5, new[] {2, 3}.AsIntervals()).AsNumbers(), Is.EqualTo(new[] {1, 3, 7, 8}));
       Assert.That(new[] {1, 4}.AsIntervals().Concat(5, new[] {0, 1}.AsIntervals()).AsNumbers(), Is.EqualTo(new[] {1, 4, 5, 6}));
+    }
+
+    public static IEnumerable<int> ToSubstitutes(IEnumerable<int> del, IEnumerable<int> ins)
+    {
+      using (var ed = del.GetEnumerator())
+      using (var ei = ins.GetEnumerator())
+      {
+        var cd = 0;
+        var ci = 0;
+        var ck = 0;
+        var nd = ed.MoveNext();
+        var ni = ei.MoveNext();
+        while (nd && ni)
+        {
+          var insert = ei.Current + cd;
+          var delete = ed.Current + ci;
+          if (insert < delete)
+          {
+            ni = ei.MoveNext();
+            ci++;
+          }
+          else if (insert > delete)
+          {
+            nd = ed.MoveNext();
+            cd++;
+          }
+          else
+          {
+            yield return insert - cd;
+            ni = ei.MoveNext();
+            nd = ed.MoveNext();
+            cd++;
+            ci++;
+          }
+        }
+      }
+    }
+
+    [Test]
+    public void TestSubKeys1()
+    {
+
+      var del = new List<int> {1};
+      var ins = new List<int> {0, 2, 3, 4};
+      var delIntervals = del.AsIntervals().ToList();
+      var insIntervals = ins.AsIntervals().ToList();
+
+      var subs = ToSubstitutes(del, ins).ToList();
+      var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+
+      Console.WriteLine("Del = {0}", del.ToCSV());
+      Console.WriteLine("Ins = {0}", ins.ToCSV());
+      Console.WriteLine("Expected = {0} Actual = {1}", subs.ToCSV(), subs2.ToCSV());
+
+      Assert.That(subs2, Is.EqualTo(subs));
+    }
+
+    [Test]
+    public void TestSubKeys2()
+    {
+
+      var del = new List<int> { 1, 4 };
+      var ins = new List<int> { 0, 2 };
+      var delIntervals = del.AsIntervals().ToList();
+      var insIntervals = ins.AsIntervals().ToList();
+
+      var subs = ToSubstitutes(del, ins).ToList();
+      var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+
+      Console.WriteLine("Del = {0}", del.ToCSV());
+      Console.WriteLine("Ins = {0}", ins.ToCSV());
+      Console.WriteLine("Expected = {0} Actual = {1}", subs.ToCSV(), subs2.ToCSV());
+
+      Assert.That(subs2, Is.EqualTo(subs));
+    }
+
+    [Test]
+    public void TestSubKeys()
+    {
+      for (var i = 0; i < 1000; i++)
+      {
+        var del = MonteCarlo.Keys(20).ToList();
+        var ins = MonteCarlo.Keys(20).ToList();
+        var delIntervals = del.AsIntervals().ToList();
+        var insIntervals = ins.AsIntervals().ToList();
+
+        var subs = ToSubstitutes(del, ins).ToList();
+        var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+
+        if (subs.Count != subs2.Count || subs.Zip(subs2, (x, y) => x != y).Any(b => b))
+        {
+          Console.WriteLine("Del = {0}", del.ToCSV());
+          Console.WriteLine("Ins = {0}", ins.ToCSV());
+          Console.WriteLine("Expected = {0} Actual = {1}", subs.ToCSV(), subs2.ToCSV());
+
+          Console.WriteLine();
+        }
+
+        Assert.That(subs2, Is.EqualTo(subs));
+      }
     }
   }
 }

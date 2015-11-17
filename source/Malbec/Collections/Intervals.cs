@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Malbec.Collections.Generic;
 
 namespace Malbec.Collections
 {
@@ -111,6 +110,7 @@ namespace Malbec.Collections
     public static IEnumerable<int> Not(this IEnumerable<int> x) => x.Not(0.Starting());
     public static IEnumerable<int> AndKeys(this IEnumerable<int> x, IEnumerable<int> y) => x.AndKeysInternal(y).WithoutPairs().ToExternal();
     public static IEnumerable<int> OrKeys(this IEnumerable<int> x, IEnumerable<int> y) => x.ToInternal().OrKeysInternal(y.ToInternal()).ToExternal().Or(x); // TODO: FIX
+    public static IEnumerable<int> SubKeys(this IEnumerable<int> del, IEnumerable<int> ins) => SubsKeysInternal(del.ToInternal(), ins.ToInternal()).ToExternal();
 
     #region Internal
     private static IEnumerable<int> Merge(IEnumerable<int> x, IEnumerable<int> y, bool px, bool py)
@@ -243,7 +243,7 @@ namespace Malbec.Collections
           {
             if (n1 % 2 == 0)
             {
-              var last = e1.Current;
+              var last = e1.Current; // todo: make sure this always works, even when past end of enumerator
               b1 = e1.MoveNext();
               sum += e1.Current - last;
             }
@@ -282,6 +282,96 @@ namespace Malbec.Collections
         }
       }
     }
+
+    private static IEnumerable<int> SubsKeysInternal(this IEnumerable<int> del, IEnumerable<int> ins)
+    {
+      using (var eDel = del.GetEnumerator())
+      using (var eIns = ins.GetEnumerator())
+      {
+        var pDel = true;
+        var pIns = true;
+        var bDel = eDel.MoveNext();
+        var bIns = eIns.MoveNext();
+        var sum = 0;
+        while (bDel && bIns)
+        {
+          if (eDel.Current + sum == eIns.Current)
+          {
+            var lastIns = eIns.Current;
+            var lastDel = eDel.Current;
+
+            if (pIns && pDel)
+            {
+              yield return eIns.Current;
+              bIns = eIns.MoveNext();
+              bDel = eDel.MoveNext();
+
+              var sIns = bIns ? eIns.Current - lastIns : int.MaxValue - lastIns;
+              var sDel = bDel ? eDel.Current - lastDel : int.MaxValue - lastDel;
+
+              if (sIns < sDel)
+                yield return eIns.Current;
+              else
+                yield return lastIns + eDel.Current - lastDel;
+
+              if (bIns)
+                sum += eIns.Current - lastIns;
+              if (bDel)
+                sum -= eDel.Current - lastDel;
+            }
+            else
+            {
+
+              if (pIns)
+              {
+                if (bIns = eIns.MoveNext())
+                  sum += eIns.Current - lastIns;
+              }
+              else
+                bIns = eIns.MoveNext();
+
+              if (pDel)
+              {
+                if (bDel = eDel.MoveNext())
+                  sum -= eDel.Current - lastDel;
+              }
+              else
+                bDel = eDel.MoveNext();
+            }
+
+            pIns = !pIns;
+            pDel = !pDel;
+          }
+          else if (eDel.Current + sum < eIns.Current)
+          {
+            if (pDel)
+            {
+              var last = eDel.Current;
+              bDel = eDel.MoveNext();
+              sum -= eDel.Current - last;
+            }
+            else
+              bDel = eDel.MoveNext();
+
+            pDel = !pDel;
+          }
+          else
+          {
+            if (pIns)
+            {
+              var last = eIns.Current;
+              if (bIns = eIns.MoveNext())
+                sum += eIns.Current - last;
+            }
+            else
+              bIns = eIns.MoveNext();
+
+            pIns = !pIns;
+          }
+        }
+      }
+    }
+    
     #endregion
 
     public static string AsString(this IEnumerable<int> x) => string.Join(", ", x.AsStringInternal());
