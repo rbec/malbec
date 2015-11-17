@@ -51,6 +51,7 @@
     <Compile Include="Functions\TestOptionToListFunction.cs" />
     <Compile Include="Functions\TestScanFunction.cs" />
     <Compile Include="Functions\TestShooseFunction.cs" />
+    <Compile Include="Functions\TestZipFunction.cs" />
     <Compile Include="Graphs\DAG.cs" />
     <Compile Include="Graphs\Node.cs" />
     <Compile Include="Graphs\Graph.cs" />
