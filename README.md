@@ -1,5 +1,5 @@
 # Malbec
-Data Flow Programming in .NET
+Data Flow Programming in C# .NET
 
 Malbec is a functional reactive data flow programming library. The output of a program is modelled as the value of a pure function (or functions).
 
