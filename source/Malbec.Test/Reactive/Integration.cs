@@ -18,8 +18,8 @@ namespace Malbec.Test.Reactive
     public static void Simple1()
     {
       var x = Variable(7);
-      var y = ℱ(n => n + 1, x);
-      var z = ℱ(n => n%2, y);
+      var y = F(n => n + 1, x);
+      var z = F(n => n%2, y);
       using (var test = Tests.Subscribe(nameof(y), y, nameof(z), z))
       {
         test.Assert(x.Assign(10), 11.ToLog(true), 1.ToLog(true));
@@ -63,7 +63,7 @@ namespace Malbec.Test.Reactive
     {
       var a = Variable("A");
       var b = Variable("B");
-      var c = ℱ(v => $"{v}+", b);
+      var c = F(v => $"{v}+", b);
       var x = Variable(a);
       var y = Variable(c);
       using (var test = Tests.Subscribe(nameof(x), Invoke(x), nameof(y), Invoke(y)))
@@ -123,7 +123,7 @@ namespace Malbec.Test.Reactive
     public static void TestOption()
     {
       var value = Variable(2.0);
-      var option = Option(ℱ(v => v >= 0, value), ℱ(Sqrt, value));
+      var option = Option(F(v => v >= 0, value), F(Sqrt, value));
       using (var test = Tests.Subscribe(nameof(option), option))
       {
         test.Assert(value.Assign(4), ((double?) 2.0).ToLog(true));
