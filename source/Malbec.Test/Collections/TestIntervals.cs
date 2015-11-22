@@ -454,14 +454,13 @@ namespace Malbec.Test.Collections
       Assert.That(new[] {1, 4}.AsIntervals().Concat(5, new[] {0, 1}.AsIntervals()).AsNumbers(), Is.EqualTo(new[] {1, 4, 5, 6}));
     }
 
-    public static IEnumerable<int> ToSubstitutes(IEnumerable<int> del, IEnumerable<int> ins)
+    private static IEnumerable<int> ToSubstitutes(IEnumerable<int> del, IEnumerable<int> ins)
     {
       using (var ed = del.GetEnumerator())
       using (var ei = ins.GetEnumerator())
       {
         var cd = 0;
         var ci = 0;
-        var ck = 0;
         var nd = ed.MoveNext();
         var ni = ei.MoveNext();
         while (nd && ni)
@@ -500,7 +499,7 @@ namespace Malbec.Test.Collections
       var insIntervals = ins.AsIntervals().ToList();
 
       var subs = ToSubstitutes(del, ins).ToList();
-      var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+      var subs2 = delIntervals.SubKeys(insIntervals).AsNumbers().ToList();
 
       Console.WriteLine("Del = {0}", del.ToCSV());
       Console.WriteLine("Ins = {0}", ins.ToCSV());
@@ -513,13 +512,13 @@ namespace Malbec.Test.Collections
     public void TestSubKeys2()
     {
 
-      var del = new List<int> { 1, 4 };
-      var ins = new List<int> { 0, 2 };
+      var del = new List<int> {1, 4};
+      var ins = new List<int> {0, 2};
       var delIntervals = del.AsIntervals().ToList();
       var insIntervals = ins.AsIntervals().ToList();
 
       var subs = ToSubstitutes(del, ins).ToList();
-      var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+      var subs2 = delIntervals.SubKeys(insIntervals).AsNumbers().ToList();
 
       Console.WriteLine("Del = {0}", del.ToCSV());
       Console.WriteLine("Ins = {0}", ins.ToCSV());
@@ -529,7 +528,7 @@ namespace Malbec.Test.Collections
     }
 
     [Test]
-    public void TestSubKeys()
+    public void TestSubKeysRandom()
     {
       for (var i = 0; i < 1000; i++)
       {
@@ -539,7 +538,7 @@ namespace Malbec.Test.Collections
         var insIntervals = ins.AsIntervals().ToList();
 
         var subs = ToSubstitutes(del, ins).ToList();
-        var subs2 = Intervals.SubKeys(delIntervals, insIntervals).AsNumbers().ToList();
+        var subs2 = delIntervals.SubKeys(insIntervals).AsNumbers().ToList();
 
         if (subs.Count != subs2.Count || subs.Zip(subs2, (x, y) => x != y).Any(b => b))
         {

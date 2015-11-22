@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Malbec.Collections;
 using Malbec.Collections.Generic;
 using Malbec.Logs;
 
@@ -19,8 +18,13 @@ namespace Malbec.Functions
     public ZipList<TXItem, TYItem, TItem> this[IReadOnlyList<TXItem> x, IReadOnlyList<TYItem> y] => new ZipList<TXItem, TYItem, TItem>(Func, x, y);
     public Log<Δ1, ZipList<TXItem, TYItem, TItem>> React(ZipList<TXItem, TYItem, TItem> value, ILog<Δ1, IReadOnlyList<TXItem>> x, ILog<Δ1, IReadOnlyList<TYItem>> y)
     {
-      var sub = y.Δ.Del.SubKeys(y.Δ.Ins).ToSub();
-      return value.ToLog(x.Δ.Fold(sub));
+      Console.WriteLine("{0} == {1}", x.Δ.ΔCount, y.Δ.ΔCount);
+      if (x.Δ.ΔCount != y.Δ.ΔCount)
+        throw new Exception("List Δs are not the same length");
+      //var sub = y.Δ.Del.SubKeys(y.Δ.Ins).ToSub();
+      //return value.ToLog(x.Δ.Fold(sub));
+
+      return value.ToLog(x.Δ.Del.AsSub().Fold(x.Δ).Fold(y.Δ.Ins.AsSub()));
     }
 
     public void Dispose(ZipList<TXItem, TYItem, TItem> value) { }
