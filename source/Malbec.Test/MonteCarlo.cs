@@ -64,10 +64,7 @@ namespace Malbec.Test
   public static class Expressions
   {
     public static IEnumerable<int> Numbers(params int[] numbers) => numbers.AsIntervals();
-    public static IEnumerable<IPatch> Ins<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, params TItem[] items) => x.ToPatch(items, Intervals.Single(key, items.Length).ToIns());
-    public static IEnumerable<IPatch> Sub<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, params TItem[] items) => x.ToPatch(items, Intervals.Single(key, items.Length).ToSub());
-    public static IEnumerable<IPatch> Del<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, int count = 1) => x.ToPatch(new TItem[0], Intervals.Single(key, count).ToDel());
-
+    
     public static IEnumerable<IPatch> InsRange<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, IReadOnlyList<int> keys, IReadOnlyList<TItem> values) => x.ToPatch(values, keys.AsIntervals().ToIns());
 
     public static Log<Δ1, List<TItem>> MutateIns<TItem>(this List<TItem> x, int key, params TItem[] items) => x.Mutate(Intervals.Single(key, items.Length).ToIns(), (i, j) => items[j]);
