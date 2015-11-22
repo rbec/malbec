@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malbec", "Malbec\Malbec.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Malbec.Test", "Malbec.Test\Malbec.Test.csproj", "{F722B769-1AA3-4F4C-8D4A-C62FD917AEC1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HelloWorld.Example", "HelloWorld.Example\HelloWorld.Example.csproj", "{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeSeries.Example", "TimeSeries.Example\TimeSeries.Example.csproj", "{869506EF-0029-4F75-9FC0-260DA49347B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F722B769-1AA3-4F4C-8D4A-C62FD917AEC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F722B769-1AA3-4F4C-8D4A-C62FD917AEC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F722B769-1AA3-4F4C-8D4A-C62FD917AEC1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{869506EF-0029-4F75-9FC0-260DA49347B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869506EF-0029-4F75-9FC0-260DA49347B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869506EF-0029-4F75-9FC0-260DA49347B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869506EF-0029-4F75-9FC0-260DA49347B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
