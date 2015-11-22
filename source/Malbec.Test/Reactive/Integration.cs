@@ -140,7 +140,7 @@ namespace Malbec.Test.Reactive
         Max,
         Filter(
           prices,
-          LowerBounds<int, Int32Order>(
+          LowerBounds(
             times,
             Constant(5, 11))));
 
@@ -148,7 +148,7 @@ namespace Malbec.Test.Reactive
         Min,
         Filter(
           prices,
-          LowerBounds<int, Int32Order>(
+          LowerBounds(
             times,
             Constant(5, 11))));
 

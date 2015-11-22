@@ -80,6 +80,9 @@ namespace Malbec.Reactive
     public static IExp<Δ1, IReadOnlyList<int>> LowerBounds<TItem, TOrder>(IExp<Δ1, IReadOnlyList<TItem>> x, IExp<Δ1, IReadOnlyList<TItem>> y) where TOrder : struct, IOrdering<TItem>
       => F<Δ1, Δ1, IReadOnlyList<TItem>, IReadOnlyList<TItem>, int, List<int>>(new LowerBoundsFunction<TItem, TOrder>(), x, y);
 
+    public static IExp<Δ1, IReadOnlyList<int>> LowerBounds(IExp<Δ1, IReadOnlyList<int>> x, IExp<Δ1, IReadOnlyList<int>> y)
+      => LowerBounds<int, Int32Order>(x, y);
+
     public static IExp<Δ1, IReadOnlyList<int>> LowerBounds(IExp<Δ1, IReadOnlyList<DateTime>> x, IExp<Δ1, IReadOnlyList<DateTime>> y)
       => LowerBounds<DateTime, DateTimeOrder>(x, y);
 
