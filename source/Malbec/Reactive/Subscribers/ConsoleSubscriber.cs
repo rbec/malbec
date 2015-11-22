@@ -10,19 +10,22 @@ namespace Malbec.Reactive.Subscribers
   public sealed class ConsoleSubscriber<TΔ, T> : Subscriber<TΔ, T>
   {
     private readonly Func<T, string> Formatter;
+    private readonly Func<TΔ, T, string> ReactFormatter;
 
-    public ConsoleSubscriber(IExp<TΔ, T> exp, Func<T, string> formatter) : base(exp)
+    public ConsoleSubscriber(IExp<TΔ, T> exp, Func<T, string> formatter, Func<TΔ, T, string> reactFormatter) : base(exp)
     {
       Formatter = formatter;
-      Console.WriteLine($"{Formatter(Sub.Value)}");
+      ReactFormatter = reactFormatter;
+      Console.WriteLine(Formatter(Sub.Value));
     }
 
-    protected override void ReactChanged() => Console.WriteLine($"{Formatter(Sub.Value)}{Environment.NewLine}    <{Sub.Δ}>");
+    protected override void ReactChanged() => Console.WriteLine(ReactFormatter(Sub.Δ, Sub.Value));
   }
 
   public static class Subscribing
   {
-    public static INode ToConsole<T>(this IExp<Δ0, T> x, string xName) => new ConsoleSubscriber<Δ0, T>(x, v => $"{xName} = {v}");
-    public static INode ToConsole<T>(this IExp<Δ1, IReadOnlyList<T>> x, string xName) => new ConsoleSubscriber<Δ1, IReadOnlyList<T>>(x, v => $"{xName} = {v.ToCSV()}");
+    public static INode ToConsole<T>(this IExp<Δ0, T> x) => new ConsoleSubscriber<Δ0, T>(x, v => $"{v}", (δ, v) => $"{v}");
+    public static INode ToConsole<T>(this IExp<Δ0, T> x, string xName) => new ConsoleSubscriber<Δ0, T>(x, v => $"{xName} = {v}", (δ, v) => $"{xName} = {v}{Environment.NewLine}    <{δ}>");
+    public static INode ToConsole<T>(this IExp<Δ1, IReadOnlyList<T>> x, string xName) => new ConsoleSubscriber<Δ1, IReadOnlyList<T>>(x, v => $"{xName} = {v.ToCSV()}", (δ, v) => $"{xName} = {v.ToCSV()}{Environment.NewLine}    <{δ}>");
   }
 }
