@@ -32,6 +32,7 @@ namespace Malbec.Logs
       return From(del.ToList(), ins.ToList());
     }
 
+    public int ΔCount => Ins.IntervalsCount() - Del.IntervalsCount();
     public bool IsEmpty => Del.Count == 0 && Ins.Count == 0;
 
     public int First
