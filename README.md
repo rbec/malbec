@@ -1,7 +1,7 @@
 # Malbec
 #### Data Flow Programming in C# .NET
 
-Malbec is a functional reactive data flow programming library. The output of a program is modelled as the value of a pure function (or functions).
+Malbec is a functional reactive data flow programming library. The output of a program is modelled as the value of a pure function.
 
 Key features
 * Optional memoisation.
@@ -11,6 +11,7 @@ Key features
 Functions are represented as vertices in a directed acyclic graph with edges representing dependencies between the ouput of a function and it's use as the argument to other functions. External vertices or 'variables' are inputs to the program and might be a file on disk, an external data stream or user input events. When external nodes are modified the changes are automatically pushed through the graph in a topologically sorted order skipping the evaluation of any function whose arguments are unchanged.
 
 #### Example 1 - Hello World
+Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
 
 ```C#
 using Malbec.Reactive.Patches;
@@ -36,8 +37,10 @@ namespace HelloWorld.Example
   }
 }
 ```
+The first variable is then changed from "Hello" to "Goodbye" resulting in a change to the output.
 
 #### Example 2 - Time Series Filter & Reduce
+Defines a time series consisting of a list of dates and a list of integers. Constructs functions for the high, low and range (high - low) for a specific period within the time series and outputs them to the screen.
 
 ```C#
 using System;
@@ -135,3 +138,4 @@ namespace TimeSeries.Example
   }
 }
 ```
+Insertions, substitutions and deletions are made to the time series resulting in changes to the high, low and range, which are lazily recalculated.
