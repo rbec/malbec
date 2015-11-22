@@ -2,7 +2,7 @@
 using Malbec.Reactive.Subscribers;
 using static Malbec.Reactive.Composition;
 
-namespace HelloWorld
+namespace HelloWorld.Example
 {
   internal class Program
   {
