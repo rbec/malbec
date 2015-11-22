@@ -30,7 +30,7 @@ namespace Malbec.Test
     public static Log<Δ1, List<int>> RandomMutation(this List<int> x) => x.Mutate(Δ1(x.Count, Number(10), Number(x.Count)), (key, j) => Number(1000));
     public static Log<Δ1, List<int>> RandomMutationOrdered(this List<int> x) => x.Mutate(Δ1(x.Count, Number(20), Number(x.Count)), (key, j) => x.Count == 0 ? Number(20) : Number(key == 0 ? 0 : x[key - 1], key == x.Count ? x[key - 1] + 5 : x[key] + 1));
 
-    private static Δ1 Δ1(int count1, int count2, int delCount) => Intervals(count1, delCount).ToDel().Fold(Intervals(count2, count2 - count1 + delCount).ToIns());
+    public static Δ1 Δ1(int count1, int count2, int delCount) => Intervals(count1, delCount).ToDel().Fold(Intervals(count2, count2 - count1 + delCount).ToIns());
 
     public static IEnumerable<T> Combination<T>(IEnumerable<T> x, int y) => CombinationInternal(x.ToArray(), y);
 
