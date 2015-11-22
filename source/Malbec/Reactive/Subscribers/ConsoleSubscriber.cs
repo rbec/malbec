@@ -25,7 +25,7 @@ namespace Malbec.Reactive.Subscribers
   public static class Subscribing
   {
     public static INode ToConsole<T>(this IExp<Δ0, T> x) => new ConsoleSubscriber<Δ0, T>(x, v => $"{v}", (δ, v) => $"{v}");
-    public static INode ToConsole<T>(this IExp<Δ0, T> x, string xName) => new ConsoleSubscriber<Δ0, T>(x, v => $"{xName} = {v}", (δ, v) => $"{xName} = {v}{Environment.NewLine}    <{δ}>");
-    public static INode ToConsole<T>(this IExp<Δ1, IReadOnlyList<T>> x, string xName) => new ConsoleSubscriber<Δ1, IReadOnlyList<T>>(x, v => $"{xName} = {v.ToCSV()}", (δ, v) => $"{xName} = {v.ToCSV()}{Environment.NewLine}    <{δ}>");
+    public static INode ToConsole<T>(this IExp<Δ0, T> x, string name) => new ConsoleSubscriber<Δ0, T>(x, v => $"{name} = {v}", (δ, v) => $"{name} = {v}");
+    public static INode ToConsole<T>(this IExp<Δ1, IReadOnlyList<T>> x, string name) => new ConsoleSubscriber<Δ1, IReadOnlyList<T>>(x, v => $"{name} = {v.ToCSV()}", (δ, v) => $"{name} = {v.ToCSV()}{Environment.NewLine}    <{δ}>");
   }
 }
