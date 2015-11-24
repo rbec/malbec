@@ -42,6 +42,8 @@ interface IPatch
 * `ISubscription<TΔ, T>` allows a subscribing node access to the data in one of it's subscriptions.
 * `IPatch` knows how to mutate a node or nodes in the function graph. `Apply()` effects that mutation.
 
+Because each node has access to *how* it's arguments have changed, rahter than just the new value it becomes possible to do a *partial* re-evaluation of a function which in some cases may be many orders of magnitude faster than a full re-evaluation.
+
 #### Example 1 - Hello World
 Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
 
