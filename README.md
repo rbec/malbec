@@ -48,25 +48,12 @@ Because each node has access to *how* it's arguments have changed, rather than j
 Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
 
 ```C#
-using Malbec.Reactive.Patches;
-using Malbec.Reactive.Subscribers;
-using static Malbec.Reactive.Composition;
+var var1 = Variable("Hello");
+var var2 = Variable("World");
+var f = F((str1, str2) => $"{str1} {str2}!", var1, var2);
 
-namespace HelloWorld.Example
-{
-  internal class Program
-  {
-    private static void Main()
-    {
-      var var1 = Variable("Hello");
-      var var2 = Variable("World");
-      var f = F((str1, str2) => $"{str1} {str2}!", var1, var2);
-      
-      using (f.ToConsole()) // Prints "Hello World!"
-        var1.Assign("Goodbye").Apply(); // Prints "Goodbye World!"
-    }
-  }
-}
+using (f.ToConsole()) // Prints "Hello World!"
+  var1.Assign("Goodbye").Apply(); // Prints "Goodbye World!"
 ```
 The first variable is then changed from "Hello" to "Goodbye" resulting in a change to the output:
 * The call to `Assign("Goodbye")` creates an `IPatch` to overwrite the variable's value and the call to `Apply()` actually performs the change.
@@ -77,53 +64,36 @@ The first variable is then changed from "Hello" to "Goodbye" resulting in a chan
 Defines a time series consisting of a list of dates and a list of integers. Constructs functions for the high, low and range (high - low) for a specific period within the time series and outputs them to the screen. The period is a subset of the time series and so we need to filter it before applying the fold/reduce function.
 
 ```C#
-using System;
-using System.Linq;
-using Malbec.Reactive.Patches;
-using Malbec.Reactive.Subscribers;
-using static Malbec.Reactive.Composition;
+var t = new DateTime(2015, 11, 20);
+var dates = Variable(t, t.AddDays(4), t.AddDays(9), t.AddDays(9), t.AddDays(11));
+var values = Variable(2, 4, 3, 1, 6);
+var period = Constant(t.AddDays(4), t.AddDays(10));
 
-namespace TimeSeries.Example
+var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
+var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
+var range = F((x, y) => x - y, high, low);
+
+using (dates.ToConsole("  dates", date => $"{date:dd/MM/yy}"))
+using (values.ToConsole(" values", item => $"{item,8}"))
+using (period.ToConsole(" period", date => $"{date:dd/MM/yy}"))
+using (high.ToConsole("   high"))
+using (low.ToConsole("    low"))
+using (range.ToConsole("  range"))
 {
-  internal class Program
-  {
-    private static readonly DateTime Date = new DateTime(2015, 11, 20);
-    private const int PAD = 12;
+  dates.Ins(2, t.AddDays(6))
+    .Concat(values.Ins(2, 100))
+    .Apply("Insert @ index 2");
 
-    private static void Main()
-    {
-      var dates = Variable(Date, Date.AddDays(4), Date.AddDays(9), Date.AddDays(9), Date.AddDays(11));
-      var values = Variable(2, 4, 3, 1, 6);
-      var period = Constant(Date.AddDays(4), Date.AddDays(10));
+  dates.Ins(6, t.AddDays(12))
+    .Concat(values.Ins(6, 200))
+    .Apply("Insert @ index 6");
 
-      var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
-      var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
-      var range = F((x, y) => x - y, high, low);
+  dates.Del(2, 3)
+    .Concat(values.Del(2, 3))
+    .Apply("Delete indices 2 - 4");
 
-      using (dates.ToConsole($"{nameof(dates),PAD}", date => $"{date:dd/MM/yy}"))
-      using (values.ToConsole($"{nameof(values),PAD}", item => $"{item,8}"))
-      using (period.ToConsole($"{nameof(period),PAD}", date => $"{date:dd/MM/yy}"))
-      using (high.ToConsole($"{nameof(high),PAD}"))
-      using (low.ToConsole($"{nameof(low),PAD}"))
-      using (range.ToConsole($"{nameof(range),PAD}"))
-      {
-        dates.Ins(2, Date.AddDays(6))
-          .Concat(values.Ins(2, 100))
-          .Apply("Insert @ index 2");
-
-        dates.Ins(6, Date.AddDays(12))
-          .Concat(values.Ins(6, 200))
-          .Apply("Insert @ index 6");
-
-        dates.Del(2, 3)
-          .Concat(values.Del(2, 3))
-          .Apply("Delete indices 2 - 4");
-
-        values.Sub(1, 150)
-          .Apply("Substitute values @ index 1");
-      }
-    }
-  }
+  values.Sub(1, 150)
+    .Apply("Substitute values @ index 1");
 }
 ```
 ###### Console output
