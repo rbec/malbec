@@ -2,7 +2,6 @@
 using System.Linq;
 using Malbec.Reactive.Patches;
 using Malbec.Reactive.Subscribers;
-using static System.Environment;
 using static Malbec.Reactive.Composition;
 
 namespace TimeSeries.Example
@@ -10,6 +9,7 @@ namespace TimeSeries.Example
   internal class Program
   {
     private static readonly DateTime Date = new DateTime(2015, 11, 20);
+    private const int PAD = 12;
 
     private static void Main()
     {
@@ -28,33 +28,28 @@ namespace TimeSeries.Example
       var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
       var range = F((x, y) => x - y, high, low);
 
-      using (dates.ToConsole($"{nameof(dates),7}", date => $"{date:dd/MM/yy}"))
-      using (values.ToConsole($"{nameof(values),7}", item => $"{item,8}"))
-      using (period.ToConsole($"{nameof(period),7}", date => $"{date:dd/MM/yy}"))
-      using (high.ToConsole($"{nameof(high),7}"))
-      using (low.ToConsole($"{nameof(low),7}"))
-      using (range.ToConsole($"{nameof(range),7}"))
+      using (dates.ToConsole($"{nameof(dates),PAD}", date => $"{date:dd/MM/yy}"))
+      using (values.ToConsole($"{nameof(values),PAD}", item => $"{item,8}"))
+      using (period.ToConsole($"{nameof(period),PAD}", date => $"{date:dd/MM/yy}"))
+      using (high.ToConsole($"{nameof(high),PAD}"))
+      using (low.ToConsole($"{nameof(low),PAD}"))
+      using (range.ToConsole($"{nameof(range),PAD}"))
       {
-        Console.WriteLine($"{NewLine}Insert @ index 2");
         dates.Ins(2, Date.AddDays(6))
           .Concat(values.Ins(2, 100))
-          .Apply();
+          .Apply("Insert @ index 2");
 
-        Console.WriteLine($"{NewLine}Insert @ index 6");
         dates.Ins(6, Date.AddDays(12))
           .Concat(values.Ins(6, 200))
-          .Apply();
+          .Apply("Insert @ index 6");
 
-        Console.WriteLine($"{NewLine}Delete indices 2 - 4");
         dates.Del(2, 3)
           .Concat(values.Del(2, 3))
-          .Apply();
+          .Apply("Delete indices 2 - 4");
 
-        Console.WriteLine($"{NewLine}Substitute values @ index 1");
         values.Sub(1, 150)
-          .Apply();
+          .Apply("Substitute values @ index 1");
       }
-      Console.WriteLine();
     }
   }
 }
