@@ -58,15 +58,8 @@ namespace TimeSeries.Example
 
     private static void Main()
     {
-      var dates = Variable(
-        Date,
-        Date.AddDays(4),
-        Date.AddDays(9),
-        Date.AddDays(9),
-        Date.AddDays(11),
-        Date.AddDays(14));
-
-      var values = Variable(2, 4, 3, 1, 6, 5);
+      var dates = Variable(Date, Date.AddDays(4), Date.AddDays(9), Date.AddDays(9), Date.AddDays(11));
+      var values = Variable(2, 4, 3, 1, 6);
       var period = Constant(Date.AddDays(4), Date.AddDays(10));
 
       var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
@@ -101,28 +94,28 @@ namespace TimeSeries.Example
 ```
 ###### Console output
 ```
-       dates = {20/11/15, 24/11/15, 29/11/15, 29/11/15, 01/12/15, 04/12/15}
-      values = {       2,        4,        3,        1,        6,        5}
+       dates = {20/11/15, 24/11/15, 29/11/15, 29/11/15, 01/12/15}
+      values = {       2,        4,        3,        1,        6}
       period = {24/11/15, 30/11/15}
         high = 4
          low = 1
        range = 3
 Insert @ index 2
-       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15, 04/12/15}
-      values = {       2,        4,      100,        3,        1,        6,        5}
+       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15}
+      values = {       2,        4,      100,        3,        1,        6}
         high = 100
        range = 99
 Insert @ index 6
-       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15, 02/12/15, 04/12/15}
-      values = {       2,        4,      100,        3,        1,        6,      200,        5}
+       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15, 02/12/15}
+      values = {       2,        4,      100,        3,        1,        6,      200}
 Delete indices 2 - 4
-       dates = {20/11/15, 24/11/15, 01/12/15, 02/12/15, 04/12/15}
-      values = {       2,        4,        6,      200,        5}
+       dates = {20/11/15, 24/11/15, 01/12/15, 02/12/15}
+      values = {       2,        4,        6,      200}
         high = 4
          low = 4
        range = 0
 Substitute values @ index 1
-      values = {       2,      150,        6,      200,        5}
+      values = {       2,      150,        6,      200}
         high = 150
          low = 150
 ```
