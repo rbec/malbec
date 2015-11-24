@@ -16,10 +16,10 @@ namespace Malbec.Reactive.Subscribers
     {
       Formatter = formatter;
       ReactFormatter = reactFormatter;
-      Console.WriteLine(Formatter(Sub.Value));
+      Console.Write(Formatter(Sub.Value));
     }
 
-    protected override void ReactChanged() => Console.WriteLine(ReactFormatter(Sub.Δ, Sub.Value));
+    protected override void ReactChanged() => Console.Write(ReactFormatter(Sub.Δ, Sub.Value));
   }
 
   public static class Subscribing
