@@ -9,7 +9,6 @@ namespace TimeSeries.Example
   internal class Program
   {
     private static readonly DateTime Date = new DateTime(2015, 11, 20);
-    private const int PAD = 12;
 
     private static void Main()
     {
@@ -21,12 +20,12 @@ namespace TimeSeries.Example
       var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
       var range = F((x, y) => x - y, high, low);
 
-      using (dates.ToConsole($"{nameof(dates),PAD}", date => $"{date:dd/MM/yy}"))
-      using (values.ToConsole($"{nameof(values),PAD}", item => $"{item,8}"))
-      using (period.ToConsole($"{nameof(period),PAD}", date => $"{date:dd/MM/yy}"))
-      using (high.ToConsole($"{nameof(high),PAD}"))
-      using (low.ToConsole($"{nameof(low),PAD}"))
-      using (range.ToConsole($"{nameof(range),PAD}"))
+      using (dates.ToConsole("  dates", date => $"{date:dd/MM/yy}"))
+      using (values.ToConsole(" values", item => $"{item,8}"))
+      using (period.ToConsole(" period", date => $"{date:dd/MM/yy}"))
+      using (high.ToConsole("   high"))
+      using (low.ToConsole("    low"))
+      using (range.ToConsole("  range"))
       {
         dates.Ins(2, Date.AddDays(6))
           .Concat(values.Ins(2, 100))
