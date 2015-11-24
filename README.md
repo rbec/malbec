@@ -10,6 +10,34 @@ Key features
 
 Functions are represented as vertices in a directed acyclic graph with edges representing dependencies between the ouput of a function and it's use as the argument to other functions. External vertices or 'variables' are inputs to the program and might be a file on disk, an external data stream or user input events. When external nodes are modified the changes are automatically pushed through the graph in a topologically sorted order skipping the evaluation of any function whose arguments are unchanged.
 
+#### Keys Concepts & Interfaces
+```C#
+interface INode
+{
+  IEnumerable<INode> Subscribers { get; }
+  bool React();
+}
+
+interface IExpression<TΔ, T> : INode
+{
+  ISubscription<TΔ, T> Subscribe(INode subscriber);
+  IEnumerable<IPatch> ToPatch(T value, TΔ δ);
+}
+
+interface ISubscription<TΔ, T> : IDisposable
+{
+  T Value { get; }
+  TΔ Δ { get; }
+}
+
+interface IPatch
+{
+  IEnumerable<INode> Process();
+}
+```
+Note: this is not the exact code but a slightly modified version to make the ideas clearer.
+`INode` represents a directed acyclic graph. `Subscribers` is the nodes that depend on the value of this node. `React()` is called if any of the nodes this node depends upon change and returns whether this node has changed as a result.
+`IExpression<TΔ, T>` represents a (possibly) changing value of any type `T`. `TΔ` is a type that describes *how* the value has changed. For example an `int` may simply have a boolean flag specifying if it *has* changed. An `IReadOnlyList<TItem>` might have `TΔ` as a data structure describing the string edits that have occurred. (Think [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance) but where we are interested in the *actual* edits, rather than their *number*.)
 #### Example 1 - Hello World
 Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
 
@@ -39,7 +67,7 @@ namespace HelloWorld.Example
 ```
 The first variable is then changed from "Hello" to "Goodbye" resulting in a change to the output.
 
-#### Example 2 - Time Series Filter & Reduce
+#### Example 2 - Time Series: Filter & Reduce
 Defines a time series consisting of a list of dates and a list of integers. Constructs functions for the high, low and range (high - low) for a specific period within the time series and outputs them to the screen.
 
 ```C#
