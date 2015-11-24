@@ -60,21 +60,21 @@ namespace HelloWorld.Example
     {
       var var1 = Variable("Hello");
       var var2 = Variable("World");
-
-      // Prints "Hello World!" to console
-      using (F((str1, str2) => $"{str1} {str2}!", var1, var2).ToConsole())
-      {
-        // Prints "Goodbye World!"
-        var1.Assign("Goodbye").Apply();
-      }
+      var f = F((str1, str2) => $"{str1} {str2}!", var1, var2);
+      
+      using (f.ToConsole()) // Prints "Hello World!"
+        var1.Assign("Goodbye").Apply(); // Prints "Goodbye World!"
     }
   }
 }
 ```
-The first variable is then changed from "Hello" to "Goodbye" resulting in a change to the output.
+The first variable is then changed from "Hello" to "Goodbye" resulting in a change to the output:
+* The call to `Assign("Goodbye")` creates an `IPatch` to overwrite the variable's value and the call to `Apply()` actually performs the change.
+* By separating the description of the change and it's application it is possible to apply a batch of changes all in a single transaction.
+* `ToConsole()` evaluates the function, prints it's value and then monitors the function for a change and prints the new value. 
 
 #### Example 2 - Time Series: Filter & Reduce
-Defines a time series consisting of a list of dates and a list of integers. Constructs functions for the high, low and range (high - low) for a specific period within the time series and outputs them to the screen.
+Defines a time series consisting of a list of dates and a list of integers. Constructs functions for the high, low and range (high - low) for a specific period within the time series and outputs them to the screen. The period is a subset of the time series and so we need to filter it before applying the fold/reduce function.
 
 ```C#
 using System;
