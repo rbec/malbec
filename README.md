@@ -1,14 +1,14 @@
 # Malbec
 #### Data Flow Programming in C# .NET
 
-Malbec is a functional reactive data flow programming library. The output of a program is modelled as the value of a pure function.
+Malbec is a functional reactive [data flow programming](https://en.wikipedia.org/wiki/Dataflow_programming) library. The output of a program is modelled as the value of a pure function.
 
 Key features
 * Optional memoisation.
 * Lazy and partial re-evaluation of nodes in the function composition graph.
 * Higher order functions allowing self-modification of the graph.
 
-Functions are represented as vertices in a directed acyclic graph with edges representing dependencies between the ouput of a function and it's use as the argument to other functions. External vertices or 'variables' are inputs to the program and might be a file on disk, an external data stream or user input events. When external nodes are modified the changes are automatically pushed through the graph in a topologically sorted order skipping the evaluation of any function whose arguments are unchanged.
+Functions are represented as vertices in a [directed acyclic graph](https://en.wikipedia.org/wiki/Directed_acyclic_graph) with edges representing dependencies between the ouput of a function and it's use as the argument to other functions. External vertices or 'variables' are inputs to the program and might be a file on disk, an external data stream or user input events. When external nodes are modified the changes are automatically pushed through the graph in a topologically sorted order skipping the evaluation of any function whose arguments are unchanged.
 
 #### Keys Concepts & Interfaces
 ```C#
@@ -32,12 +32,16 @@ interface ISubscription<TΔ, T> : IDisposable
 
 interface IPatch
 {
-  IEnumerable<INode> Process();
+  IEnumerable<INode> Apply();
 }
 ```
-Note: this is not the exact code but a slightly modified version to make the ideas clearer.
-`INode` represents a directed acyclic graph. `Subscribers` is the nodes that depend on the value of this node. `React()` is called if any of the nodes this node depends upon change and returns whether this node has changed as a result.
-`IExpression<TΔ, T>` represents a (possibly) changing value of any type `T`. `TΔ` is a type that describes *how* the value has changed. For example an `int` may simply have a boolean flag specifying if it *has* changed. An `IReadOnlyList<TItem>` might have `TΔ` as a data structure describing the string edits that have occurred. (Think [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance) but where we are interested in the *actual* edits, rather than their *number*.)
+*Note: this is not the exact code but a slightly modified version to make the ideas clearer.*
+
+* `INode` represents a directed acyclic graph. `Subscribers` is the nodes that depend on the value of this node. `React()` is called if any of the nodes this node depends upon change and returns whether this node has changed as a result.
+* `IExpression<TΔ, T>` represents a (possibly) changing value of any type `T`. `TΔ` is a type that describes *how* the value has changed. For example an `int` may simply have a boolean flag specifying if it *has* changed. An `IReadOnlyList<TItem>` might have `TΔ` as a data structure describing the string edits that have occurred. (Think [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance) but where we are interested in the actual edits, instead of just than their number.)
+* `ISubscription<TΔ, T>` allows a subscribing node access to the data in one of it's subscriptions.
+* `IPatch` knows how to mutate a node or nodes in the function graph. `Apply()` effects that mutation.
+
 #### Example 1 - Hello World
 Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
 
