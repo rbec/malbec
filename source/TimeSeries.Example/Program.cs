@@ -8,13 +8,12 @@ namespace TimeSeries.Example
 {
   internal class Program
   {
-    private static readonly DateTime Date = new DateTime(2015, 11, 20);
-
     private static void Main()
     {
-      var dates = Variable(Date, Date.AddDays(4), Date.AddDays(9), Date.AddDays(9), Date.AddDays(11));
+      var t = new DateTime(2015, 11, 20);
+      var dates = Variable(t, t.AddDays(4), t.AddDays(9), t.AddDays(9), t.AddDays(11));
       var values = Variable(2, 4, 3, 1, 6);
-      var period = Constant(Date.AddDays(4), Date.AddDays(10));
+      var period = Constant(t.AddDays(4), t.AddDays(10));
 
       var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
       var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
@@ -27,11 +26,11 @@ namespace TimeSeries.Example
       using (low.ToConsole("    low"))
       using (range.ToConsole("  range"))
       {
-        dates.Ins(2, Date.AddDays(6))
+        dates.Ins(2, t.AddDays(6))
           .Concat(values.Ins(2, 100))
           .Apply("Insert @ index 2");
 
-        dates.Ins(6, Date.AddDays(12))
+        dates.Ins(6, t.AddDays(12))
           .Concat(values.Ins(6, 200))
           .Apply("Insert @ index 6");
 
