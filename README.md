@@ -44,97 +44,58 @@ Defines a time series consisting of a list of dates and a list of integers. Cons
 
 ```C#
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Malbec.Logs;
-using Malbec.Reactive.Expressions;
 using Malbec.Reactive.Patches;
 using Malbec.Reactive.Subscribers;
-using static System.Environment;
 using static Malbec.Reactive.Composition;
 
 namespace TimeSeries.Example
 {
   internal class Program
   {
+    private static readonly DateTime Date = new DateTime(2015, 11, 20);
+    private const int PAD = 12;
+
     private static void Main()
     {
-      var date = new DateTime(2015, 11, 20);
-
       var dates = Variable(
-        date,
-        date.AddDays(4),
-        date.AddDays(9),
-        date.AddDays(9),
-        date.AddDays(10),
-        date.AddDays(14));
-
-      var period = Constant(date.AddDays(4), date.AddDays(10));
+        Date,
+        Date.AddDays(4),
+        Date.AddDays(9),
+        Date.AddDays(9),
+        Date.AddDays(11),
+        Date.AddDays(14));
 
       var values = Variable(2, 4, 3, 1, 6, 5);
+      var period = Constant(Date.AddDays(4), Date.AddDays(10));
 
-      Console.WriteLine($"{NewLine}-------------------");
-      Console.WriteLine(
-        "Calculate high, low and range (high - low) for period" +
-        $"[{date.AddDays(4):d} - {date.AddDays(10):d})");
-
-      var high = High(dates, values, period);
-      var low = Low(dates, values, period);
+      var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
+      var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
       var range = F((x, y) => x - y, high, low);
 
-      using (high.ToConsole(nameof(high)))
-      using (low.ToConsole(nameof(low)))
-      using (range.ToConsole(nameof(range)))
+      using (dates.ToConsole($"{nameof(dates),PAD}", date => $"{date:dd/MM/yy}"))
+      using (values.ToConsole($"{nameof(values),PAD}", item => $"{item,8}"))
+      using (period.ToConsole($"{nameof(period),PAD}", date => $"{date:dd/MM/yy}"))
+      using (high.ToConsole($"{nameof(high),PAD}"))
+      using (low.ToConsole($"{nameof(low),PAD}"))
+      using (range.ToConsole($"{nameof(range),PAD}"))
       {
-        Console.WriteLine($"{NewLine}-------------------");
-
-        Console.WriteLine($"Inserting ({date.AddDays(6):d}, 100) @ index 2");
-        dates.Ins(2, date.AddDays(6)) // high, range changed, low unchanged
+        dates.Ins(2, Date.AddDays(6))
           .Concat(values.Ins(2, 100))
-          .Apply();
-        Console.WriteLine($"{NewLine}-------------------");
+          .Apply("Insert @ index 2");
 
-        Console.WriteLine($"Inserting ({date.AddDays(12):d}, 200) @ index 6");
-        dates.Ins(6, date.AddDays(12)) // all unchanged (outside of the period)
+        dates.Ins(6, Date.AddDays(12))
           .Concat(values.Ins(6, 200))
-          .Apply();
-        Console.WriteLine($"{NewLine}-------------------");
+          .Apply("Insert @ index 6");
 
-        Console.WriteLine(
-          $"Deleting ({date.AddDays(6):d}, 100)," +
-          $"({date.AddDays(9):d}, 3)," +
-          $"({date.AddDays(9):d}, 1) starting @ index 2");
-        dates.Del(2, 3) // high, low and range changed
+        dates.Del(2, 3)
           .Concat(values.Del(2, 3))
-          .Apply();
-        Console.WriteLine($"{NewLine}-------------------");
+          .Apply("Delete indices 2 - 4");
 
-        Console.WriteLine(
-          $"Substitute ({date.AddDays(4):d}, 4) with ({date.AddDays(5):d}, 150) @ index 1");
-        dates.Sub(1, date.AddDays(5)) // high and low changed, range unchanged
-          .Concat(values.Sub(1, 150))
-          .Apply();
-        Console.WriteLine($"{NewLine}-------------------");
+        values.Sub(1, 150)
+          .Apply("Substitute values @ index 1");
       }
     }
-
-    private static IExp<Δ0, int> High(
-      IExp<Δ1, IReadOnlyList<DateTime>> dates,
-      IExp<Δ1, IReadOnlyList<int>> values,
-      IExp<Δ1, IReadOnlyList<DateTime>> period)
-      => TimeSeriesFold(Math.Max, dates, values, period);
-
-    private static IExp<Δ0, int> Low(
-      IExp<Δ1, IReadOnlyList<DateTime>> dates,
-      IExp<Δ1, IReadOnlyList<int>> values,
-      IExp<Δ1, IReadOnlyList<DateTime>> period)
-      => TimeSeriesFold(Math.Min, dates, values, period);
-
-    private static IExp<Δ0, int> TimeSeriesFold(Func<int, int, int> func,
-      IExp<Δ1, IReadOnlyList<DateTime>> dates,
-      IExp<Δ1, IReadOnlyList<int>> values,
-      IExp<Δ1, IReadOnlyList<DateTime>> period)
-      => Fold(func, Filter(values, LowerBounds(dates, period)));
   }
 }
 ```
