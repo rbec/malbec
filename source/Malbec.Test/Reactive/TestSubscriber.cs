@@ -36,7 +36,7 @@ namespace Malbec.Test.Reactive
 
     public void Throws(IEnumerable<IPatch> patchs)
     {
-      NUnit.Framework.Assert.Throws<Exception>(patchs.Apply, "Exception was not thrown");
+      NUnit.Framework.Assert.Throws<Exception>(() => patchs.Apply(), "Exception was not thrown");
       ΔX = default(TΔ);
     }
 

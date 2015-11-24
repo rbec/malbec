@@ -27,7 +27,6 @@ namespace Malbec.Reactive.Patches
 
     public static IEnumerable<IPatch> Assign<T>(this IExp<Δ0, T> expression, T value) => expression.ToPatch(value, true);
 
-
     public static IEnumerable<IPatch> Ins<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, params TItem[] items) => x.ToPatch(items, Intervals.Single(key, items.Length).ToIns());
     public static IEnumerable<IPatch> Sub<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, params TItem[] items) => x.ToPatch(items, Intervals.Single(key, items.Length).ToSub());
     public static IEnumerable<IPatch> Del<TItem>(this IExp<Δ1, IReadOnlyList<TItem>> x, int key, int count = 1) => x.ToPatch(new TItem[0], Intervals.Single(key, count).ToDel());
