@@ -99,4 +99,31 @@ namespace TimeSeries.Example
   }
 }
 ```
+###### Console output
+```
+       dates = {20/11/15, 24/11/15, 29/11/15, 29/11/15, 01/12/15, 04/12/15}
+      values = {       2,        4,        3,        1,        6,        5}
+      period = {24/11/15, 30/11/15}
+        high = 4
+         low = 1
+       range = 3
+Insert @ index 2
+       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15, 04/12/15}
+      values = {       2,        4,      100,        3,        1,        6,        5}
+        high = 100
+       range = 99
+Insert @ index 6
+       dates = {20/11/15, 24/11/15, 26/11/15, 29/11/15, 29/11/15, 01/12/15, 02/12/15, 04/12/15}
+      values = {       2,        4,      100,        3,        1,        6,      200,        5}
+Delete indices 2 - 4
+       dates = {20/11/15, 24/11/15, 01/12/15, 02/12/15, 04/12/15}
+      values = {       2,        4,        6,      200,        5}
+        high = 4
+         low = 4
+       range = 0
+Substitute values @ index 1
+      values = {       2,      150,        6,      200,        5}
+        high = 150
+         low = 150
+```
 Insertions, substitutions and deletions are made to the time series resulting in changes to the high, low and range, which are lazily recalculated.
