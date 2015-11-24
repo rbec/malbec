@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Malbec.Collections;
 using Malbec.Graphs;
@@ -11,8 +12,10 @@ namespace Malbec.Reactive.Patches
   {
     public static void Apply(params IPatch[] patches) => Apply(patches as IReadOnlyCollection<IPatch>);
 
-    public static void Apply(this IReadOnlyCollection<IPatch> patches) // TODO: need to ensure that Variables are unique (or union edits)
+    public static void Apply(this IReadOnlyCollection<IPatch> patches, string comment = null) // TODO: need to ensure that Variables are unique (or union edits)
     {
+      if (comment != null)
+        Console.WriteLine(comment);
       var changed = Graphing.Propagate(new Nodes(patches.SelectMany(update => update.Process()).ToList())).ToList();
       foreach (var s in changed)
         s.Clear();
@@ -20,7 +23,7 @@ namespace Malbec.Reactive.Patches
         patch.Clear();
     }
 
-    public static void Apply(this IEnumerable<IPatch> patches) => Apply(patches.ToArray());
+    public static void Apply(this IEnumerable<IPatch> patches, string comment = null) => Apply(patches.ToArray(), comment);
 
     public static IEnumerable<IPatch> Assign<T>(this IExp<Δ0, T> expression, T value) => expression.ToPatch(value, true);
 
