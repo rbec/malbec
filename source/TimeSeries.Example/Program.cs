@@ -13,15 +13,8 @@ namespace TimeSeries.Example
 
     private static void Main()
     {
-      var dates = Variable(
-        Date,
-        Date.AddDays(4),
-        Date.AddDays(9),
-        Date.AddDays(9),
-        Date.AddDays(11),
-        Date.AddDays(14));
-
-      var values = Variable(2, 4, 3, 1, 6, 5);
+      var dates = Variable(Date, Date.AddDays(4), Date.AddDays(9), Date.AddDays(9), Date.AddDays(11));
+      var values = Variable(2, 4, 3, 1, 6);
       var period = Constant(Date.AddDays(4), Date.AddDays(10));
 
       var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
