@@ -18,7 +18,7 @@ namespace TimeSeries.Example
         Date.AddDays(4),
         Date.AddDays(9),
         Date.AddDays(9),
-        Date.AddDays(10),
+        Date.AddDays(11),
         Date.AddDays(14));
 
       var values = Variable(2, 4, 3, 1, 6, 5);
@@ -28,9 +28,9 @@ namespace TimeSeries.Example
       var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
       var range = F((x, y) => x - y, high, low);
 
-      using (dates.ToConsole($"{nameof(dates),7}", date => $"{date:d}"))
-      using (values.ToConsole($"{nameof(values),7}", item => $"{item,10}"))
-      using (period.ToConsole($"{nameof(period),7}", date => $"{date:d}"))
+      using (dates.ToConsole($"{nameof(dates),7}", date => $"{date:dd/MM/yy}"))
+      using (values.ToConsole($"{nameof(values),7}", item => $"{item,8}"))
+      using (period.ToConsole($"{nameof(period),7}", date => $"{date:dd/MM/yy}"))
       using (high.ToConsole($"{nameof(high),7}"))
       using (low.ToConsole($"{nameof(low),7}"))
       using (range.ToConsole($"{nameof(range),7}"))
