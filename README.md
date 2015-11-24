@@ -38,11 +38,11 @@ interface IPatch
 *Note: this is not the exact code but a slightly modified version to make the ideas clearer.*
 
 * `INode` represents a directed acyclic graph. `Subscribers` is the nodes that depend on the value of this node. `React()` is called if any of the nodes this node depends upon change and returns whether this node has changed as a result.
-* `IExpression<TΔ, T>` represents a (possibly) changing value of any type `T`. `TΔ` is a type that describes *how* the value has changed. For example an `int` may simply have a boolean flag specifying if it *has* changed. An `IReadOnlyList<TItem>` might have `TΔ` as a data structure describing the string edits that have occurred. (Think [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance) but where we are interested in the actual edits, instead of just than their number.)
+* `IExpression<TΔ, T>` represents a (possibly) changing value of any type `T`. `TΔ` is a type that describes *how* the value has changed. For example an `int` may simply have a boolean flag specifying whether it *has* changed. An `IReadOnlyList<TItem>` might have `TΔ` as a data structure describing the string edits that have occurred. (Think [Edit Distance](https://en.wikipedia.org/wiki/Edit_distance) but where we are interested in the actual edits, instead of just than their number.)
 * `ISubscription<TΔ, T>` allows a subscribing node access to the data in one of it's subscriptions.
-* `IPatch` knows how to mutate a node or nodes in the function graph. `Apply()` effects that mutation.
+* `IPatch` knows how to mutate a node or nodes in the function graph. `Apply()` effects that mutation and returns all the `INode`s that consequently need updating.
 
-Because each node has access to *how* it's arguments have changed, rahter than just the new value it becomes possible to do a *partial* re-evaluation of a function which in some cases may be many orders of magnitude faster than a full re-evaluation.
+Because each node has access to *how* it's arguments have changed, rather than just the new value, it becomes possible to do a *partial* re-evaluation of a function which in some cases may be many orders of magnitude faster than a full re-evaluation.
 
 #### Example 1 - Hello World
 Defines two input variables "Hello" and "World" and defines a function that concatenates them. The output of this function is then sent to the console.
