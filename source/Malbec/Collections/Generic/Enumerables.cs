@@ -7,8 +7,11 @@ namespace Malbec.Collections.Generic
 {
   public static class Enumerables
   {
-    public static string ToCSV<T>(this IEnumerable<T> items, int max = 100) 
-      => $"{{{string.Join(", ", items.Take(max))}}}";
+    public static string ToCSV<T>(this IEnumerable<T> items, int max = 100)
+      => items.ToCSV(value => value.ToString());
+
+    public static string ToCSV<T>(this IEnumerable<T> items, Func<T, string> itemFormatter, int max = 100) 
+      => $"{{{string.Join(", ", items.Take(max).Select(itemFormatter))}}}";
 
     public static string ToLines<T>(this IEnumerable<T> items, int max = 100)
       => $"{string.Join(Environment.NewLine, items.Take(max))}";
