@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Malbec.Collections.Generic.Orderings;
 using Malbec.Logs;
 using Malbec.Reactive.Patches;
 using NUnit.Framework;
