@@ -7,8 +7,8 @@
     <ProjectGuid>{2E817D28-19DB-4EEE-B22D-5AE47BF3AFDD}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HelloWorld.Example</RootNamespace>
-    <AssemblyName>HelloWorld.Example</AssemblyName>
+    <RootNamespace>Example.HelloWorld</RootNamespace>
+    <AssemblyName>Example.HelloWorld</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Malbec.Graphs;
 
-namespace Malbec.Test.Graphs
+namespace Test.Malbec.Graphs
 {
   public sealed class ImmutableNode : Node
   {

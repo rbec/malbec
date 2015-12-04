@@ -1,4 +1,4 @@
-namespace Malbec.Test.Graphs
+namespace Test.Malbec.Graphs
 {
   public sealed class MutableNode : Node
   {

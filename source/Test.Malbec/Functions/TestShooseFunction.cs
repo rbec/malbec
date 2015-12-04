@@ -2,7 +2,7 @@
 using Malbec.Logs;
 using NUnit.Framework;
 
-namespace Malbec.Test.Functions
+namespace Test.Malbec.Functions
 {
   public class TestChooseFunction
   {

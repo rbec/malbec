@@ -4,7 +4,7 @@ using System.Linq;
 using Malbec.Collections.Generic;
 using Malbec.Graphs;
 
-namespace Malbec.Test.Graphs
+namespace Test.Malbec.Graphs
 {
   public abstract class Node : INode
   {

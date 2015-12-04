@@ -3,7 +3,7 @@ using System.Linq;
 using Malbec.Collections.Generic;
 using NUnit.Framework;
 
-namespace Malbec.Test.Collections.Generic
+namespace Test.Malbec.Collections.Generic
 {
   public class TestScanList
   {

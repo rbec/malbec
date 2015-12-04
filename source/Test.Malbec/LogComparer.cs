@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Malbec.Logs;
 
-namespace Malbec.Test
+namespace Test.Malbec
 {
   public sealed class LogComparer<T, TItem> : IEqualityComparer<Log<Δ1, T>>
     where T : IReadOnlyList<TItem>

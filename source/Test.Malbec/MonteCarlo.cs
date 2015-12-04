@@ -4,12 +4,12 @@ using System.Linq;
 using Malbec.Collections;
 using Malbec.Collections.Generic;
 using Malbec.Collections.Generic.Orderings;
+using Malbec.Logs;
 using Malbec.Reactive.Expressions;
 using Malbec.Reactive.Patches;
-using Malbec.Logs;
-using Malbec.Test.Graphs;
+using Test.Malbec.Graphs;
 
-namespace Malbec.Test
+namespace Test.Malbec
 {
   public static class MonteCarlo
   {

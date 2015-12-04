@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Malbec.Graphs;
 
-namespace Malbec.Test.Graphs
+namespace Test.Malbec.Graphs
 {
   public static class DAG
   {

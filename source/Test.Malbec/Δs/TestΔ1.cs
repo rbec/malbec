@@ -4,7 +4,7 @@ using Malbec.Collections;
 using Malbec.Logs;
 using NUnit.Framework;
 
-namespace Malbec.Test.Δs
+namespace Test.Malbec.Δs
 {
   public class TestΔ1
   {

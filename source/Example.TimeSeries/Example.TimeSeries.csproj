@@ -7,8 +7,8 @@
     <ProjectGuid>{869506EF-0029-4F75-9FC0-260DA49347B9}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeSeries.Example</RootNamespace>
-    <AssemblyName>TimeSeries.Example</AssemblyName>
+    <RootNamespace>Example.TimeSeries</RootNamespace>
+    <AssemblyName>Example.TimeSeries</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

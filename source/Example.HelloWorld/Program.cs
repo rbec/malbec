@@ -1,18 +1,18 @@
-﻿using Malbec.Reactive.Patches;
+﻿using Malbec.Reactive;
+using Malbec.Reactive.Patches;
 using Malbec.Reactive.Subscribers;
-using static Malbec.Reactive.Composition;
 
-namespace HelloWorld.Example
+namespace Example.HelloWorld
 {
   internal class Program
   {
     private static void Main()
     {
-      var var1 = Variable("Hello");
-      var var2 = Variable("World");
+      var var1 = Composition.Variable("Hello");
+      var var2 = Composition.Variable("World");
 
       // Prints "Hello World!" to console
-      using (F((str1, str2) => $"{str1} {str2}!", var1, var2).ToConsole())
+      using (Composition.F((str1, str2) => $"{str1} {str2}!", var1, var2).ToConsole())
       {
         // Prints "Goodbye World!"
         var1.Assign("Goodbye").Apply();

@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Linq;
+using Malbec.Reactive;
 using Malbec.Reactive.Patches;
 using Malbec.Reactive.Subscribers;
-using static Malbec.Reactive.Composition;
 
-namespace TimeSeries.Example
+namespace Example.TimeSeries
 {
   internal class Program
   {
     private static void Main()
     {
       var t = new DateTime(2015, 11, 20);
-      var dates = Variable(t, t.AddDays(4), t.AddDays(9), t.AddDays(9), t.AddDays(11));
-      var values = Variable(2, 4, 3, 1, 6);
-      var period = Constant(t.AddDays(4), t.AddDays(10));
+      var dates = Composition.Variable(t, t.AddDays(4), t.AddDays(9), t.AddDays(9), t.AddDays(11));
+      var values = Composition.Variable(2, 4, 3, 1, 6);
+      var period = Composition.Constant(t.AddDays(4), t.AddDays(10));
 
-      var high = Fold(Math.Max, Filter(values, LowerBounds(dates, period)));
-      var low = Fold(Math.Min, Filter(values, LowerBounds(dates, period)));
-      var range = F((x, y) => x - y, high, low);
+      var high = Composition.Fold(Math.Max, Composition.Filter(values, Composition.LowerBounds(dates, period)));
+      var low = Composition.Fold(Math.Min, Composition.Filter(values, Composition.LowerBounds(dates, period)));
+      var range = Composition.F((x, y) => x - y, high, low);
 
       using (dates.ToConsole("  dates", date => $"{date:dd/MM/yy}"))
       using (values.ToConsole(" values", item => $"{item,8}"))

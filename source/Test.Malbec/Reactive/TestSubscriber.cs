@@ -7,7 +7,7 @@ using Malbec.Reactive.Patches;
 using Malbec.Reactive.Subscribers;
 using NUnit.Framework;
 
-namespace Malbec.Test.Reactive
+namespace Test.Malbec.Reactive
 {
   public sealed class TestSubscriber<TΔ, T> : Subscriber<TΔ, T>
   {

@@ -5,7 +5,7 @@ using Malbec.Collections.Generic;
 using Malbec.Collections.Generic.Orderings;
 using NUnit.Framework;
 
-namespace Malbec.Test.Collections.Generic
+namespace Test.Malbec.Collections.Generic
 {
   public class TestLists
   {

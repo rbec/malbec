@@ -4,9 +4,8 @@ using System.Linq;
 using Malbec.Collections.Generic;
 using Malbec.Graphs;
 using NUnit.Framework;
-using static System.Environment;
 
-namespace Malbec.Test.Graphs
+namespace Test.Malbec.Graphs
 {
   public class TestGraphs
   {
@@ -88,7 +87,7 @@ namespace Malbec.Test.Graphs
       }
 
       Assert.That(result, Is.Ordered.Using(Comparer), $"Bad order: {result.ToCSV()}");
-      Assert.That(result, Is.EquivalentTo(expected), $"{result.ToCSV()} != {expected.ToCSV()}{NewLine}Graph{NewLine}{graph}{NewLine}Request{NewLine}{nodes.ToCSV()}");
+      Assert.That(result, Is.EquivalentTo(expected), $"{result.ToCSV()} != {expected.ToCSV()}{Environment.NewLine}Graph{Environment.NewLine}{graph}{Environment.NewLine}Request{Environment.NewLine}{nodes.ToCSV()}");
     }
 
     private static void TestReaction(bool verbose, Graph graph, IEnumerable<IExternalNode> expected, params IExternalNode[] nodes)

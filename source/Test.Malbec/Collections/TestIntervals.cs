@@ -6,7 +6,7 @@ using Malbec.Collections.Generic;
 using Malbec.Collections.Generic.Orderings;
 using NUnit.Framework;
 
-namespace Malbec.Test.Collections
+namespace Test.Malbec.Collections
 {
   public class TestIntervals
   {
